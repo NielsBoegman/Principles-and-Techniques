@@ -7,14 +7,22 @@ import java.util.List;
 
 public class Node {
     private Board board;
-    private List<Board> moves;
+    private List<Node> moves;
 
-    public Node(Board board, List<Board> moves) {
+    public Node(Board board, List<Node> moves) {
         this.board = board;
         this.moves = moves;
     }
 
     public Node(Board board) {
         this.board = board;
+    }
+
+    public void addMoves(List<Node> moves) {
+        this.moves = moves;
+    }
+
+    public Board getBoard() {
+        return this.board;
     }
 }
