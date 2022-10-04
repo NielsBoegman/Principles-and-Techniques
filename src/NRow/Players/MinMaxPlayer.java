@@ -39,8 +39,8 @@ public class MinMaxPlayer extends PlayerController {
                 currentchild = makeTree((playerId % 2) + 1, depth - 1, currentchild);
                 children.set(j, currentchild);
             }
-            currentroot.addMoves(children);
         }
+        currentroot.addMoves(children);
         return currentroot;
     }
 
