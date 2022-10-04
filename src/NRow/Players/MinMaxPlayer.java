@@ -1,6 +1,7 @@
 package NRow.Players;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import NRow.Board;
 import NRow.Heuristics.Heuristic;
@@ -27,9 +28,9 @@ public class MinMaxPlayer extends PlayerController {
     public Node makeTree(int playerId, int depth, Node node) {
         Node currentroot = node;
         List<Node> children = new ArrayList<>();
-        for (int i = 0; i < node.getBoard.width; i++) {
-            if (board.isValid(i)) {
-                Board newboard = board.getNewBoard(i, playerId);
+        for (int i = 0; i < node.getBoard().width; i++) {
+            if (node.getBoard().isValid(i)) {
+                Board newboard = node.getBoard().getNewBoard(i, playerId);
                 children.add(new Node(newboard));
             }
         }
@@ -48,7 +49,7 @@ public class MinMaxPlayer extends PlayerController {
     public int makeMove(Board board) {
         // create the tree of certain depth
         Node root = new Node(board);
-        root = makeTree(this.playerId, this.depth, root)
+        root = makeTree(this.playerId, this.depth, root);
 
         // TODO: implement minmax player!
         // HINT: use the functions on the 'board' object to produce a new board given a
