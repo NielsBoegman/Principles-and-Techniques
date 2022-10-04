@@ -34,7 +34,7 @@ public class MinMaxPlayer extends PlayerController {
             }
         }
         if (depth > 1) {
-            for (j = 0; j < children.size(); j++) {
+            for (int j = 0; j < children.size(); j++) {
                 Node currentchild = children.get(j);
                 currentchild = makeTree((playerId % 2) + 1, depth - 1, currentchild);
                 children.set(j, currentchild);
