@@ -2,7 +2,6 @@ package NRow.Tree;
 
 //imports here
 import NRow.Board;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Node {
