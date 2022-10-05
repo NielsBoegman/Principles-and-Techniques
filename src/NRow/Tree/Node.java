@@ -7,6 +7,7 @@ import java.util.List;
 public class Node {
     private Board board;
     private List<Node> moves;
+    private int LastMove = -1;
 
     public Node(Board board, List<Node> moves) {
         this.board = board;
@@ -27,5 +28,13 @@ public class Node {
 
     public List<Node> getMoves() {
         return this.moves;
+    }
+
+    public int getLastMove() {
+        return this.LastMove;
+    }
+
+    public void setLastMove(int i) {
+        this.LastMove = i;
     }
 }

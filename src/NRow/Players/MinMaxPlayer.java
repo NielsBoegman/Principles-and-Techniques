@@ -32,7 +32,9 @@ public class MinMaxPlayer extends PlayerController {
         for (int i = 0; i < node.getBoard().width; i++) {
             if (node.getBoard().isValid(i)) {
                 Board newboard = node.getBoard().getNewBoard(i, playerId);
-                children.add(new Node(newboard));
+                Node newnode = new Node(newboard);
+                newnode.setLastMove(i);
+                children.add(newnode);
             }
         }
         if (depth > 1) {
