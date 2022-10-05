@@ -59,20 +59,20 @@ public class MinMaxPlayer extends PlayerController {
         // the different board states!
 
         // Example:
-        int maxValue = Integer.MIN_VALUE;
-        int maxMove = 0;
-        for (int i = 0; i < board.width; i++) { // for each of the possible moves
-            if (board.isValid(i)) { // if the move is valid
-                Board newBoard = board.getNewBoard(i, playerId); // Get a new board resulting from that move
-                int value = heuristic.evaluateBoard(playerId, newBoard); // evaluate that new board to get a heuristic
-                                                                         // value from it
-                if (value > maxValue) {
-                    maxMove = i;
-                }
-            }
-        }
+        // int maxValue = Integer.MIN_VALUE;
+        // int maxMove = 0;
+        // for (int i = 0; i < board.width; i++) { // for each of the possible moves
+        //     if (board.isValid(i)) { // if the move is valid
+        //         Board newBoard = board.getNewBoard(i, playerId); // Get a new board resulting from that move
+        //         int value = heuristic.evaluateBoard(playerId, newBoard); // evaluate that new board to get a heuristic
+        //                                                                  // value from it
+        //         if (value > maxValue) {
+        //             maxMove = i;
+        //         }
+        //     }
+        // }
         // This returns the same as:
-        heuristic.getBestAction(playerId, board); // Very useful helper function!
+        // heuristic.getBestAction(playerId, board); // Very useful helper function!
 
         /*
          * This is obviously not enough (this is depth 1)
@@ -82,7 +82,7 @@ public class MinMaxPlayer extends PlayerController {
          * move/action to take!
          */
 
-        return maxMove;
+        return findMove(0, this.playerId, root, this.depth);
     }
 
     public int findMove(int cur, int playerId, Node curNode, int maxDepth) {
