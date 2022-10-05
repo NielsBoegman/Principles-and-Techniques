@@ -19,6 +19,7 @@ public class App {
 
     /**
      * Determine the players for the game
+     * 
      * @param n
      * @return an array of size 2 with two Playercontrollers
      */
@@ -29,7 +30,7 @@ public class App {
         PlayerController human = new MinMaxPlayer(1, n, 5, heuristic1);
         PlayerController human2 = new HumanPlayer(2, n, heuristic2);
 
-        //TODO: Implement other PlayerControllers (MinMax, AlphaBeta)
+        // TODO: Implement other PlayerControllers (MinMax, AlphaBeta)
 
         PlayerController[] players = { human, human2 };
 
