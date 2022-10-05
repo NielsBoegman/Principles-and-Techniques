@@ -2,7 +2,9 @@ package NRow.Players;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
 import NRow.Board;
 import NRow.Heuristics.Heuristic;
@@ -55,51 +57,34 @@ public class MinMaxPlayer extends PlayerController {
         Node root = new Node(board);
         root = makeTree(this.playerId, this.depth, root);
         int move = findMove(0, this.playerId, root, this.depth);
-        return move;
+        for (Node node : root.getMoves()){
+            if (node.getHeuristic() == move) return node.getLastMove();
+        }
+        return -1;
     }
 
     public int findMove(int cur, int playerId, Node curNode, int maxDepth) {
         if (cur == maxDepth) {
-            return heuristic.evaluateBoard(this.playerId, curNode.getBoard());
+            return heuristic.evaluateBoard(playerId, curNode.getBoard());
         }
 
         if (playerId == 1) {
-            int[] values = new int[30];
+            List<Integer> values = new ArrayList<>();
             for (Node node : curNode.getMoves()) {
-                values[node.getLastMove()] = this.findMove(cur + 1, playerId + 1, node, maxDepth);
+                int next = this.findMove(cur + 1, playerId + 1, node, maxDepth);
+                values.add(next);
+                node.setHeuristic(next);
             }
-            return this.getMaxIndex(values);
+            return Collections.max(values);
         } else {
-            int[] values = new int[30];
+            List<Integer> values = new ArrayList<>();
             for (Node node : curNode.getMoves()) {
-                values[node.getLastMove()] = this.findMove(cur + 1, playerId - 1, node, maxDepth);
+                int next = this.findMove(cur + 1, playerId - 1, node, maxDepth);
+                values.add(next);
+                node.setHeuristic(next);
             }
-            return this.getMinIndex(values);
+            return Collections.min(values);
         }
 
-    }
-
-    public int getMaxIndex(int[] values) {
-        int index = -1;
-        int max = Integer.MIN_VALUE;
-        for (int i = 0; i < values.length; i++) {
-            if (max < values[i]) {
-                max = values[i];
-                index = i;
-            }
-        }
-        return index;
-    }
-
-    public int getMinIndex(int[] values) {
-        int index = -1;
-        int min = Integer.MAX_VALUE;
-        for (int i = 0; i < values.length; i++) {
-            if (min > values[i]) {
-                min = values[i];
-                index = i;
-            }
-        }
-        return index;
     }
 }
