@@ -8,6 +8,7 @@ public class Node {
     private Board board;
     private List<Node> moves;
     private int LastMove;
+    private int heuristic;
 
     public Node(Board board, List<Node> moves) {
         this.board = board;
@@ -38,5 +39,13 @@ public class Node {
 
     public void setLastMove(int i) {
         this.LastMove = i;
+    }
+
+    public void setHeuristic(int i) {
+        this.heuristic = i;
+    }
+
+    public int getHeuristic() {
+        return this.heuristic;
     }
 }

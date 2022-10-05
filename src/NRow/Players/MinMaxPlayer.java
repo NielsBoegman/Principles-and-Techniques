@@ -34,6 +34,7 @@ public class MinMaxPlayer extends PlayerController {
                 Board newboard = node.getBoard().getNewBoard(i, playerId);
                 Node newnode = new Node(newboard);
                 newnode.setLastMove(i);
+                newnode.setHeuristic(heuristic.evaluateBoard(this.playerId, newboard));
                 children.add(newnode);
             }
         }
