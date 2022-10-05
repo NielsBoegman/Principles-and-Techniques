@@ -1,6 +1,7 @@
 package NRow.Players;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import NRow.Board;
@@ -84,4 +85,24 @@ public class MinMaxPlayer extends PlayerController {
         return maxMove;
     }
 
+    public int findMove(int cur, int playerId, Node curNode, int maxDepth) {
+        if (cur == maxDepth) {
+            return heuristic.evaluateBoard(playerId, curNode.getBoard());
+        }
+
+        if (playerId == 1) {
+            List<Integer> values = new ArrayList<>();
+            for (Node node : curNode.getMoves()){
+                values.add(this.findMove(cur+1, playerId+1, node, maxDepth));
+            }
+            return Collections.max(values);
+        } else{
+            List<Integer> values = new ArrayList<>();
+            for (Node node : curNode.getMoves()){
+                values.add(this.findMove(cur+1, playerId-1, node, maxDepth));
+            }
+            return Collections.min(values);
+        }
+
+    }
 }

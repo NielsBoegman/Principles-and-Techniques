@@ -25,4 +25,8 @@ public class Node {
     public Board getBoard() {
         return this.board;
     }
+
+    public List<Node> getMoves() {
+        return this.moves;
+    }
 }
