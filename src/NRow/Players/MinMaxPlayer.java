@@ -62,18 +62,41 @@ public class MinMaxPlayer extends PlayerController {
         }
 
         if (playerId == 1) {
-            List<Integer> values = new ArrayList<>();
+            int[] values = new int[curNode.getMoves().size()];
             for (Node node : curNode.getMoves()) {
-                values.add(this.findMove(cur + 1, playerId + 1, node, maxDepth));
+                values[node.getLastMove()] = this.findMove(cur + 1, playerId + 1, node, maxDepth);
             }
-            return Collections.max(values);
+            return this.getMaxIndex(values);
         } else {
-            List<Integer> values = new ArrayList<>();
+            int[] values = new int[curNode.getMoves().size()];
             for (Node node : curNode.getMoves()) {
-                values.add(this.findMove(cur + 1, playerId - 1, node, maxDepth));
+                values[node.getLastMove()] = this.findMove(cur + 1, playerId - 1, node, maxDepth);
             }
-            return Collections.min(values);
+            return this.getMinIndex(values);
         }
 
+    }
+    
+    public int getMaxIndex(int[] values){
+        int index = -1;
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < values.length; i++){
+            if (max < values[i]){
+                max = values[i];
+                index = i;
+            }
+        }
+        return index;
+    }
+    public int getMinIndex(int[] values){
+        int index = -1;
+        int min = Integer.MAX_VALUE;
+        for (int i = 0; i < values.length; i++){
+            if (min > values[i]){
+                min = values[i];
+                index = i;
+            }
+        }
+        return index;
     }
 }
