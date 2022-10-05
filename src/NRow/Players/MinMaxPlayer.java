@@ -62,13 +62,13 @@ public class MinMaxPlayer extends PlayerController {
         }
 
         if (playerId == 1) {
-            int[] values = new int[curNode.getMoves().size()];
+            int[] values = new int[30];
             for (Node node : curNode.getMoves()) {
                 values[node.getLastMove()] = this.findMove(cur + 1, playerId + 1, node, maxDepth);
             }
             return this.getMaxIndex(values);
         } else {
-            int[] values = new int[curNode.getMoves().size()];
+            int[] values = new int[30];
             for (Node node : curNode.getMoves()) {
                 values[node.getLastMove()] = this.findMove(cur + 1, playerId - 1, node, maxDepth);
             }
