@@ -53,7 +53,8 @@ public class MinMaxPlayer extends PlayerController {
         // create the tree of certain depth
         Node root = new Node(board);
         root = makeTree(this.playerId, this.depth, root);
-        return findMove(0, this.playerId, root, this.depth);
+        int move = findMove(0, this.playerId, root, this.depth);
+        return move;
     }
 
     public int findMove(int cur, int playerId, Node curNode, int maxDepth) {
