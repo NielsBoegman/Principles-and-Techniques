@@ -7,15 +7,17 @@ import java.util.List;
 public class Node {
     private Board board;
     private List<Node> moves;
-    private int LastMove = -1;
+    private int LastMove;
 
     public Node(Board board, List<Node> moves) {
         this.board = board;
         this.moves = moves;
+        this.LastMove = -1;
     }
 
     public Node(Board board) {
         this.board = board;
+        this.LastMove = -1;
     }
 
     public void addMoves(List<Node> moves) {

@@ -76,23 +76,24 @@ public class MinMaxPlayer extends PlayerController {
         }
 
     }
-    
-    public int getMaxIndex(int[] values){
+
+    public int getMaxIndex(int[] values) {
         int index = -1;
         int max = Integer.MIN_VALUE;
-        for (int i = 0; i < values.length; i++){
-            if (max < values[i]){
+        for (int i = 0; i < values.length; i++) {
+            if (max < values[i]) {
                 max = values[i];
                 index = i;
             }
         }
         return index;
     }
-    public int getMinIndex(int[] values){
+
+    public int getMinIndex(int[] values) {
         int index = -1;
         int min = Integer.MAX_VALUE;
-        for (int i = 0; i < values.length; i++){
-            if (min > values[i]){
+        for (int i = 0; i < values.length; i++) {
+            if (min > values[i]) {
                 min = values[i];
                 index = i;
             }
