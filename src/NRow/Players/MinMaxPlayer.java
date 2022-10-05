@@ -69,7 +69,8 @@ public class MinMaxPlayer extends PlayerController {
         //         if (value > maxValue) {
         //             maxMove = i;
         //         }
-        //     }
+        //     }fatal: Need to specify how to reconcile divergent branches.
+
         // }
         // This returns the same as:
         // heuristic.getBestAction(playerId, board); // Very useful helper function!
@@ -87,7 +88,7 @@ public class MinMaxPlayer extends PlayerController {
 
     public int findMove(int cur, int playerId, Node curNode, int maxDepth) {
         if (cur == maxDepth) {
-            return heuristic.evaluateBoard(playerId, curNode.getBoard());
+            return heuristic.evaluateBoard(this.playerId, curNode.getBoard());
         }
 
         if (playerId == 1) {
