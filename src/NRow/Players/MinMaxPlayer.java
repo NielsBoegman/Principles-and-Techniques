@@ -56,7 +56,8 @@ public class MinMaxPlayer extends PlayerController {
         // create the tree of certain depth
         Node root = new Node(board);
         root = makeTree(this.playerId, this.depth, root);
-        int move = findMove(0, this.playerId, root, this.depth);
+        // int move = findMove(0, this.playerId, root, this.depth);
+        int move = pruningFindMove(0, this.playerId, root, this.depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
         for (Node node : root.getMoves()){
             if (node.getHeuristic() == move) return node.getLastMove();
         }
@@ -86,5 +87,33 @@ public class MinMaxPlayer extends PlayerController {
             return Collections.min(values);
         }
 
+    }
+
+    public int pruningFindMove(int cur, int playerId, Node curNode, int maxDepth, int alpha, int beta){
+        if (cur == maxDepth) {
+            return heuristic.evaluateBoard(this.playerId, curNode.getBoard());
+        }
+
+        if (playerId == 1) {
+            int best = Integer.MIN_VALUE;
+            for (Node node : curNode.getMoves()) {
+                int next = this.pruningFindMove(cur + 1, playerId + 1, node, maxDepth, alpha, beta);
+                best = Math.max(best, next);
+                alpha = Math.max(alpha, best);
+                if (beta <= alpha) break;
+                node.setHeuristic(best);
+            }
+            return best;
+        } else {
+            int best = Integer.MAX_VALUE;
+            for (Node node : curNode.getMoves()) {
+                int next = this.pruningFindMove(cur + 1, playerId - 1, node, maxDepth, alpha, beta);
+                best = Math.min(best, next);
+                beta = Math.min(best, beta);
+                if (beta <= alpha) break;
+                node.setHeuristic(best);
+            }
+            return best;
+        }
     }
 }
