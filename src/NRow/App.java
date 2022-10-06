@@ -30,8 +30,6 @@ public class App {
         PlayerController human = new MinMaxPlayer(1, n, 5, heuristic1);
         PlayerController human2 = new HumanPlayer(2, n, heuristic2);
 
-        // TODO: Implement other PlayerControllers (MinMax, AlphaBeta)
-
         PlayerController[] players = { human, human2 };
 
         return players;
