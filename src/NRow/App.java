@@ -29,7 +29,7 @@ public class App {
         SimpleHeuristic heuristic2 = new SimpleHeuristic(n);
 
         PlayerController human = new AlphaBetaPlayer(1, n, 5, heuristic1);
-        PlayerController human2 = new MinMaxPlayer(2, n, 5, heuristic2);
+        PlayerController human2 = new HumanPlayer(2, n, heuristic2);
 
         PlayerController[] players = { human, human2 };
 
