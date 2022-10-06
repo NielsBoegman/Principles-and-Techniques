@@ -100,8 +100,8 @@ public class MinMaxPlayer extends PlayerController {
                 int next = this.pruningFindMove(cur + 1, playerId + 1, node, maxDepth, alpha, beta);
                 best = Math.max(best, next);
                 alpha = Math.max(alpha, best);
-                if (beta <= alpha) break;
                 node.setHeuristic(best);
+                if (beta <= alpha) break;
             }
             return best;
         } else {
@@ -110,8 +110,8 @@ public class MinMaxPlayer extends PlayerController {
                 int next = this.pruningFindMove(cur + 1, playerId - 1, node, maxDepth, alpha, beta);
                 best = Math.min(best, next);
                 beta = Math.min(best, beta);
-                if (beta <= alpha) break;
                 node.setHeuristic(best);
+                if (beta <= alpha) break;
             }
             return best;
         }
