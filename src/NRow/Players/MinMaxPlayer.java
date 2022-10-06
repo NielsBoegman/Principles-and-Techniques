@@ -65,7 +65,7 @@ public class MinMaxPlayer extends PlayerController {
 
     public int findMove(int cur, int playerId, Node curNode, int maxDepth) {
         if (cur == maxDepth) {
-            return heuristic.evaluateBoard(playerId, curNode.getBoard());
+            return heuristic.evaluateBoard(this.playerId, curNode.getBoard());
         }
 
         if (playerId == 1) {
