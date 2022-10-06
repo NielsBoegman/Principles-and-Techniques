@@ -1,17 +1,16 @@
 package NRow.Players;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import NRow.Board;
 import NRow.Heuristics.Heuristic;
 import NRow.Tree.Node;
 
-public class MinMaxPlayer extends PlayerController {
+public class AlphaBetaPlayer extends PlayerController{
     private int depth;
 
-    public MinMaxPlayer(int playerId, int gameN, int depth, Heuristic heuristic) {
+    public AlphaBetaPlayer(int playerId, int gameN, int depth, Heuristic heuristic) {
         super(playerId, gameN, heuristic);
         this.depth = depth;
     }
@@ -55,46 +54,50 @@ public class MinMaxPlayer extends PlayerController {
         root = makeTree(this.playerId, this.depth, root);
 
         // Either get the move with normal MinMax or A-B pruning.
-        int move = findMove(0, this.playerId, root, this.depth);
+        // int move = findMove(0, this.playerId, root, this.depth);
+        int move = pruningFindMove(0, this.playerId, root, this.depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
         for (Node node : root.getMoves()){ // Find node based on heuristic value
             if (node.getHeuristic() == move) return node.getLastMove();
         }
         return -1;
-    }
+    }    
 
     /**
-     * Recursively find the best heuristic value possible for our player using the minimax algorithm
+     * Recursively find the best heuristic value possible for our player using the minimax algorithm using alpha-beta pruning
      * 
      * @param cur Current depth we're looking from
      * @param playerId  ID of player we are playing from
      * @param curNode Current node were looking from
      * @param maxDepth Maximum depth to look
+     * @param alpha Alpha value for A-B pruning
+     * @param beta Beta value for A-B pruning
      * @return Max heuristic value
      */
-    public int findMove(int cur, int playerId, Node curNode, int maxDepth) {
+    public int pruningFindMove(int cur, int playerId, Node curNode, int maxDepth, int alpha, int beta){
         if (cur == maxDepth) { // Base case
             return heuristic.evaluateBoard(this.playerId, curNode.getBoard());
         }
 
         if (playerId == 1) { // Maximizing
-            List<Integer> values = new ArrayList<>();
+            int best = Integer.MIN_VALUE;
             for (Node node : curNode.getMoves()) {
-                int next = this.findMove(cur + 1, playerId + 1, node, maxDepth);
-                values.add(next);
-                node.setHeuristic(next);
+                int next = this.pruningFindMove(cur + 1, playerId + 1, node, maxDepth, alpha, beta);
+                best = Math.max(best, next);
+                alpha = Math.max(alpha, best);
+                node.setHeuristic(best);
+                if (beta <= alpha) break; // Node is not worth exploring, break out
             }
-            return Collections.max(values);
+            return best;
         } else { // Minimizing
-            List<Integer> values = new ArrayList<>();
+            int best = Integer.MAX_VALUE;
             for (Node node : curNode.getMoves()) {
-                int next = this.findMove(cur + 1, playerId - 1, node, maxDepth);
-                values.add(next);
-                node.setHeuristic(next);
+                int next = this.pruningFindMove(cur + 1, playerId - 1, node, maxDepth, alpha, beta);
+                best = Math.min(best, next);
+                beta = Math.min(best, beta);
+                node.setHeuristic(best);
+                if (beta <= alpha) break; // Node is not worth exploring, break out
             }
-            return Collections.min(values);
+            return best;
         }
-
     }
-
-    
 }
