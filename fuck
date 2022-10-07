@@ -1,1 +1,0 @@
-were gonna make a class gametree thats gonna contain a parent board and however many boards we can have as a second board, then loop through moves, make a function for it in gametree, then loop through and do minmax and then ofcourse were gonna be using the makemove thing from minmaxplayer
