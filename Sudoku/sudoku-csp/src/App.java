@@ -1,6 +1,6 @@
 public class App {
     public static void main(String[] args) throws Exception {
-        start("Sudoku1.txt");
+        start("C:\\Users\\Niels\\Documents\\AI\\FourInARow\\Sudoku\\sudoku-csp\\Sudoku69.txt");
     }
 
     /**

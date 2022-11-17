@@ -25,7 +25,30 @@ public class Game {
    * @return true if the sudoku solution is correct
    */
   public boolean validSolution() {
-    // TODO: implement validSolution function
+    Field[][] board = sudoku.getBoard();
+    boolean[] tester = new boolean[9];
+    for(int i=0;i<9;i++){
+      tester[i] = false;
+    }
+    boolean verify = true;
+    for(int i=0;i<9;i++){
+      for(int j=0;j<9;j++){
+        if (tester[board[i][j].getValue()-1] == verify || board[i][j].getValue() == 0){
+          return false;
+        }
+        tester[board[i][j].getValue()-1] = verify;
+      }
+      verify = !verify;
+    }
+    for(int i=0;i<9;i++){
+      for(int j=0;j<9;j++){
+        if (tester[board[j][i].getValue()-1] == verify || board[i][j].getValue() == 0){
+          return false;
+        }
+        tester[board[j][i].getValue()-1] = verify;
+      }
+      verify = !verify;
+    }
     return true;
   }
 }
