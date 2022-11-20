@@ -1,5 +1,6 @@
 {
   "java.project.sourcePaths": [
-    "src"
+    "src",
+    "Sudoku/sudoku-csp/src"
   ]
 }

@@ -53,7 +53,7 @@ public class Game {
       for (int j = 0; j < 8; j += 3) {
         for (int x = 0; x < 3; x++) {
           for (int y = 0; y < 3; y++) {
-            if (test[board[i + x][j + y].getValue() - 1] == verify || board[i + x][j + y].getValue() == 0) {
+            if (tester[board[i + x][j + y].getValue() - 1] == verify || board[i + x][j + y].getValue() == 0) {
               return false;
             }
             tester[board[i + x][j + y].getValue() - 1] = verify;
