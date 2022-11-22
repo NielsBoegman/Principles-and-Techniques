@@ -1,6 +1,8 @@
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.List;
 import java.util.Scanner;
+import java.util.ArrayList;
 
 public class Sudoku {
   private Field[][] board;
@@ -70,6 +72,29 @@ public class Sudoku {
    */
   private static void addNeighbours(Field[][] grid) {
     // TODO: for each field, add its neighbours
+    for(int i=0;i<9;i++){
+      for(int j=0;j<9;j++){
+        ArrayList<Field> neighbours = new ArrayList<>();
+        for(int k=0;k<9;k++){
+          if (k!=i){
+            neighbours.add(grid[k][j]);
+          }
+        }
+        for(int k=0;k<9;k++){
+          if (k!=j){
+            neighbours.add(grid[i][k]);
+          }
+        }
+        for(int x = i - (i%3); x< i-(i%3)+3;x++){
+          for(int y = j - (j%3); y< j-(j%3)+3;y++){
+            if(!(x==i && y==j) && !neighbours.contains(grid[x][y])){
+              neighbours.add(grid[x][y]);
+            }
+          }
+        }
+        grid[i][j].setNeighbours(neighbours);
+      }
+    }
   }
 
   /**

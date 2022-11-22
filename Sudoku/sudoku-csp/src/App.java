@@ -1,6 +1,8 @@
+import java.util.Comparator;
+
 public class App {
     public static void main(String[] args) throws Exception {
-        start("/home/pokemaster69/Documents/CS_year_4/AI_PandT/four-in-a-row-master/Sudoku/sudoku-csp/Sudoku6.txt");
+        start("C:\\Users\\Niels\\Documents\\AI\\FourInARow\\Sudoku\\sudoku-csp\\Sudoku1.txt");
     }
 
     /**
@@ -12,9 +14,32 @@ public class App {
     public static void start(String filePath) {
         Game game1 = new Game(new Sudoku(filePath));
         game1.showSudoku();
+        Comparator<Field[]> min_remaining = new Comparator<Field[]>() {
 
-        if (game1.solve() && game1.validSolution()) {
-            System.out.println("Solved!");
+            @Override
+            public int compare(Field[] o1, Field[] o2) {
+                return o1[0].getDomainSize() - o2[0].getDomainSize();
+            }
+            
+        };
+
+        Comparator<Field[]> arc_to_finalized = new Comparator<Field[]>() {
+
+            @Override
+            public int compare(Field[] o1, Field[] o2) {
+                return o1[0].finalizedNeighbours() - o2[0].finalizedNeighbours();
+            }
+            
+        };
+
+
+        // if (game1.solve(min_remaining) && game1.validSolution()) {
+        //     System.out.println("Solved with minimum remaining values as heuristic!");
+        // } else {
+        //     System.out.println("Could not solve this sudoku :(");
+        // }
+        if (game1.solve(arc_to_finalized) && game1.validSolution()) {
+            System.out.println("Solved with finalized fields as heuristic!");
         } else {
             System.out.println("Could not solve this sudoku :(");
         }

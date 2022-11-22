@@ -57,6 +57,16 @@ public class Field {
     return newNeighbours;
   }
 
+  public int finalizedNeighbours(){
+    int total = 0;
+    for (Field neighbour : getNeighbours()){
+      if (neighbour.getDomainSize() == 0){
+          total += 1;
+      }
+    }
+    return total;
+  }
+
   /*
    * ==================
    *  DOMAIN FUNCTIONS
