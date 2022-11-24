@@ -92,27 +92,28 @@ public class Game {
    */
   public boolean validSolution() {
     Field[][] board = sudoku.getBoard();
-    boolean[] tester = new boolean[9];
-    for (int i = 0; i < 9; i++) {
+    boolean[] tester = new boolean[9]; //initiate an array of booleans, if the solution is valid each number should only occur once in a row or column or subgrid
+    for (int i = 0; i < 9; i++) { 
       tester[i] = false;
     }
     boolean verify = true;
     for (int i = 0; i < 9; i++) {
-      for (int j = 0; j < 9; j++) {
-        if (board[i][j].getValue() == 0){
+      for (int j = 0; j < 9; j++) { //loop over every column of the sudoku, for each column update the value in the tester array
+        if (board[i][j].getValue() == 0){ //if the sudoku still contains a 0 the solution is false and we can stop
           return false;
         }
-        if (tester[board[i][j].getValue() - 1] == verify) {
+        if (tester[board[i][j].getValue() - 1] == verify) { //if the number has already been encountered in this column, the solution is invalid
           return false;
         }
         tester[board[i][j].getValue() - 1] = verify;
       }
       verify = !verify;
     }
-    for (int i = 0; i < 9; i++) {
+    for (int i = 0; i < 9; i++) { //The same as the previous loop but now we check all the rows.
       for (int j = 0; j < 9; j++) {
-        if(board[j][i].getValue() == 0) return false;
-
+        if(board[j][i].getValue() == 0){
+           return false;
+        }
         if (tester[board[j][i].getValue() - 1] == verify) {
           return false;
         }
@@ -120,11 +121,13 @@ public class Game {
       }
       verify = !verify;
     }
-    for (int i = 0; i < 8; i += 3) {
+    for (int i = 0; i < 8; i += 3) { //finally we need to test the subgrids, the outer 2 for loops loop over the 9 subgrids of a sudoku
       for (int j = 0; j < 8; j += 3) {
-        for (int x = 0; x < 3; x++) {
+        for (int x = 0; x < 3; x++) { // the inner 2 for loops loop over the fields of a subgrid, testing for duplicates works the same as for the rows and columns.
           for (int y = 0; y < 3; y++) {
-            if ( board[i + x][j + y].getValue() == 0) return false;
+            if ( board[i + x][j + y].getValue() == 0){
+               return false;
+            }
             if (tester[board[i + x][j + y].getValue() - 1] == verify) {
               return false;
             }
@@ -134,6 +137,6 @@ public class Game {
         verify = !verify;
       }
     }
-    return true;
+    return true; //finally if we passed all checks without failing we return true
   }
 }
