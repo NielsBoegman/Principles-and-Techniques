@@ -15,28 +15,32 @@ public class Game {
     System.out.println(sudoku);
   }
 
+  // Function to revise the domains as used in AC-3
   public void revise(Field left, Field right){
-
     List<Integer> to_remove = new ArrayList<>();
     for (int x : left.getDomain()){
+
+      // Right side of the arc is finalized, value should be removed from left domain
       if (right.getDomainSize() == 0) {
         if (x == right.getValue()){
           to_remove.add(x);
         }
         continue;
       }
+
+      // Check if there is a matching value for every value x in left domain.
       boolean matching = false;
       for (int y : right.getDomain()){
         if (x != y){
-          matching = true;
+          matching = true; // Matching value found
         }
       }
       if (!matching){
-        to_remove.add(x);
+        to_remove.add(x); // If a matching value is not found, remove x from left domain
       }
     }
     for (int x : to_remove){
-      left.removeFromDomain(x);
+      left.removeFromDomain(x); // Remove all values that should be discarded from left domain.
     }
   }
   /**
@@ -45,30 +49,31 @@ public class Game {
    * @return true if the constraints can be satisfied, else false
    */
   public boolean solve(Comparator<Field[]> comp) {
-    // TODO: implement AC-3
-    int arcs_processed = 0;
+    int arcs_processed = 0; // Complexity measure
 
+    // Create queue for fields to be revised
     PriorityQueue<Field[]> queue = new PriorityQueue<>(comp);
     Field[][] board = sudoku.getBoard();
     for (Field[] row : board){
       for (Field field : row){
-        if (field.getDomainSize() == 0) continue;
+        if (field.getDomainSize() == 0) continue; // If field is finalized, no need to put it in the queue
         for (Field neighbor : field.getNeighbours()){
           queue.add(new Field[]{field, neighbor});
         }
       }
     }
+
     while (!queue.isEmpty()) {
         Field[] arc = queue.remove();
         arcs_processed++;
         int domainsize = arc[0].getDomainSize();
         revise(arc[0], arc[1]);
-        if (arc[0].getDomainSize() == 0) {
+        if (arc[0].getDomainSize() == 0) { // No possible values left
           return false;
         }
         if (domainsize != arc[0].getDomainSize()){
             for (Field x : arc[0].getOtherNeighbours(arc[1])) {
-              if (x.getDomainSize() == 0) continue;
+              if (x.getDomainSize() == 0) continue; // If neighbour is finalized, do not add, nothing to change
               Field[] new_arc = new Field[]{x, arc[0]};
               if (!queue.contains(new_arc)){
                 queue.add(new_arc);

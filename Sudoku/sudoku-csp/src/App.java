@@ -35,6 +35,15 @@ public class App {
             
         };
 
+        // Solving based on minimum amount of elements in the domain left
+        // if (game1.solve(min_remaining) && game1.validSolution()) {
+        //     System.out.println("Solved!");
+        // } else {
+        //     System.out.println("Could not solve this sudoku :(");
+        // }
+        // game1.showSudoku();
+
+        // We reverse the arc heuristic as otherwise it will prioritize fields with less finalized neighbours
         if (game1.solve(arc_to_finalized.reversed()) && game1.validSolution()) {
             System.out.println("Solved!");
         } else {
