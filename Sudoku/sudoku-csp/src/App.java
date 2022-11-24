@@ -14,6 +14,8 @@ public class App {
     public static void start(String filePath) {
         Game game1 = new Game(new Sudoku(filePath));
         game1.showSudoku();
+
+        // Heuristic thats based on the minimum amount of elements in the domain left
         Comparator<Field[]> min_remaining = new Comparator<Field[]>() {
 
             @Override
@@ -23,6 +25,7 @@ public class App {
             
         };
 
+        // Heuristic thats based on the amount of finalized neighbours
         Comparator<Field[]> arc_to_finalized = new Comparator<Field[]>() {
 
             @Override
@@ -32,14 +35,8 @@ public class App {
             
         };
 
-
-        // if (game1.solve(min_remaining) && game1.validSolution()) {
-        //     System.out.println("Solved with minimum remaining values as heuristic!");
-        // } else {
-        //     System.out.println("Could not solve this sudoku :(");
-        // }
-        if (game1.solve(arc_to_finalized) && game1.validSolution()) {
-            System.out.println("Solved with finalized fields as heuristic!");
+        if (game1.solve(arc_to_finalized.reversed()) && game1.validSolution()) {
+            System.out.println("Solved!");
         } else {
             System.out.println("Could not solve this sudoku :(");
         }
