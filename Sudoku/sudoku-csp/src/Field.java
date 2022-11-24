@@ -57,6 +57,7 @@ public class Field {
     return newNeighbours;
   }
 
+  // Returns the amount of neighbours that have a final value and therefore empty domain
   public int finalizedNeighbours(){
     int total = 0;
     for (Field neighbour : getNeighbours()){
