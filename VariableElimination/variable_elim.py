@@ -5,6 +5,10 @@ Class for the implementation of the variable elimination algorithm.
 
 """
 
+# Factor class
+# lijst met dingen in de factor
+# Combinaties als ["True", "False", "0.1"]
+# en dat in 1 lijst
 class VariableElimination():
 
     def __init__(self, network):
