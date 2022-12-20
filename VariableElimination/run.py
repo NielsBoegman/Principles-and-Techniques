@@ -24,10 +24,10 @@ if __name__ == '__main__':
 
     # Make your variable elimination code in the seperate file: 'variable_elim'. 
     # You use this file as follows:
-    #ve = VariableElimination(net)
+    ve = VariableElimination(net)
 
     # Set the node to be queried as follows:
-    #query = 'Alarm'
+    query = 'Alarm'
 
     # The evidence is represented in the following way (can also be empty when there is no evidence): 
     #evidence = {'Burglary': 'True'}
