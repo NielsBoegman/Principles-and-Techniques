@@ -35,3 +35,16 @@ class VariableElimination():
                 for the query variable
 
         """
+        #TODO create factors for johncalls etc.
+        #TODO reduce to keep only observed
+        for variable in elim_order:
+            if variable == query:
+                continue
+            toelim = 0
+            for i in range(len(table[0])):
+                if table[0][i] ==  variable:
+                    toelim = i
+            for x in range(len(table)):
+                table[x].pop(toelim)
+            #TODO merge duplicate rows
+            
