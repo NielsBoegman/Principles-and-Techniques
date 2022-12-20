@@ -60,5 +60,3 @@ class VariableElimination():
                             table.pop(y)
                             y-=1
                 x+=1
-            #TODO merge duplicate rows
-            
