@@ -19,6 +19,12 @@ class VariableElimination():
         """
         self.network = network
 
+    def checkRow(one, two):
+        for x in range(len(one)-1):
+            if not one[x] == two[x]:
+                return False
+        return True
+
     def run(self, query, observed, elim_order):
         """
         Use the variable elimination algorithm to find out the probability
@@ -46,5 +52,13 @@ class VariableElimination():
                     toelim = i
             for x in range(len(table)):
                 table[x].pop(toelim)
+            while not x == len(table):
+                for y in range(len(table)):
+                    if not x ==y:
+                        if checkRow(table[x], table[y]):
+                            table[x][-1] += table[y][-1]
+                            table.pop(y)
+                            y-=1
+                x+=1
             #TODO merge duplicate rows
             
