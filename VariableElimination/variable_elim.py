@@ -9,6 +9,7 @@ Class for the implementation of the variable elimination algorithm.
 # lijst met dingen in de factor
 # Combinaties als ["True", "False", "0.1"]
 # en dat in 1 lijst
+# use dictory index to get dataframe, then pass dataframe
 class VariableElimination():
 
     def __init__(self, network):
