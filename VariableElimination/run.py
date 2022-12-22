@@ -21,11 +21,11 @@ if __name__ == '__main__':
     print("Parents:")
     print(net.parents)
     print("Probabilities:")
-    print(pd.merge(net.probabilities['Alarm'], net.probabilities['JohnCalls'], on='Alarm'))
+    print(net.probabilities)
 
     # Make your variable elimination code in the seperate file: 'variable_elim'. 
     # You use this file as follows:
-    df = pd.merge(net.probabilities['Alarm'], net.probabilities['MaryCalls'], on='Alarm')
+    df = pd.merge(net.probabilities['Burglary'], net.probabilities['Alarm'], on='Burglary')
 
     df['prob'] = df['prob_x'] * df['prob_y']
     df.pop('prob_x')
