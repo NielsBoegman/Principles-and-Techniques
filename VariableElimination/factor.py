@@ -1,11 +1,15 @@
 import pandas as pd
 
 class Factor:
-    labels = []
     
     def __init__(self, df):
-        for label in df.columns:
-            self.labels.append(label)
+        self.label = df.columns[0]
+        self.labels = []
+        self.parents = []
+        for l in df.columns:
+            self.labels.append(l)
+        for l in df.columns[1:-1]:
+            self.parents.append(l)
         self.df = df
     
     def __mul__(self, other):
@@ -18,7 +22,6 @@ class Factor:
                     common = self.labels[i]
         
         new_df = pd.merge(self.get_df(), other.get_df(), on=common)
-        print(new_df)
         if self_val_label == other_val_label:
             new_df[self_val_label] = new_df["{}_x".format(self_val_label)] * new_df["{}_y".format(other_val_label)]
             new_df.pop("{}_x".format(self_val_label))
@@ -30,19 +33,17 @@ class Factor:
 
         return Factor(new_df)
     
-    def reduce_factor(self, variable, value):
-        index = self.labels.index(variable)
-        for i in range(len(self.probabilties)):
-            if self.probabilties[i][index] != value:
-                self.probabilties.pop(i)
+    def __reduce__(self, variable, value):
+        self.df = self.df.drop(self.df[self.df.loc[:, variable] != value].index)
 
-    def remove_entry(self, index):
-        self.probabilties.pop(index)
+    def __eliminate__(self, variable):
+        df = self.df.drop(variable, axis=1)
+        labels = df.columns[:-1].tolist()
+        df = df.groupby(labels, as_index=False).sum()
+        return Factor(df)
     
     def get_df(self): return self.df
 
-def product_factors(factor1, factor2):
-    return
+    def get_label(self): return self.label
 
-def marginalize_factor(factor, variable):
-    return
+    def get_parents(self): return self.parents

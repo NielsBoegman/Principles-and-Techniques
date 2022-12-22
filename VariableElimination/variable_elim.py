@@ -4,6 +4,8 @@
 Class for the implementation of the variable elimination algorithm.
 
 """
+from factor import Factor
+
 
 # Factor class
 # lijst met dingen in de factor
@@ -20,12 +22,21 @@ class VariableElimination():
         """
         self.network = network
 
-    def checkRow(one, two):
-        for x in range(len(one)-1):
-            if not one[x] == two[x]:
-                return False
-        return True
+    def multiply_parents(self, child, parents, factors):
+        for i in range(len(parents)):
+            if not len(parents[i].get_parents()) == 0:
+                parents2 = []
+                for x in parents[i].get_parents():
+                    for para in factors:
+                        if para.get_label() == x:
+                            parents2.append(para)
+                            break
+                parents[i] = self.multiply_parents(parents[i], parents2, factors)
+        for parent in parents:
+            child = child.__mul__(parent)
+        return child 
 
+        
     def run(self, query, observed, elim_order):
         """
         Use the variable elimination algorithm to find out the probability
@@ -42,22 +53,29 @@ class VariableElimination():
                 for the query variable
 
         """
-        #TODO create factors for johncalls etc.
-        #TODO reduce to keep only observed
-        for variable in elim_order:
-            if variable == query:
-                continue
-            toelim = 0
-            for i in range(len(table[0])):
-                if table[0][i] ==  variable:
-                    toelim = i
-            for x in range(len(table)):
-                table[x].pop(toelim)
-            while not x == len(table):
-                for y in range(len(table)):
-                    if not x ==y:
-                        if checkRow(table[x], table[y]):
-                            table[x][-1] += table[y][-1]
-                            table.pop(y)
-                            y-=1
-                x+=1
+        factors = []
+        queryfactor = None
+        for key in self.network.probabilities.keys():
+            factors.append(Factor(self.network.probabilities[key]))
+        for fac in factors:
+            if fac.get_label() == query:
+                queryfactor = fac
+                break
+        
+        queryparents = []
+        for parent in queryfactor.get_parents():
+            for fac in factors:
+                if fac.get_label() == parent:
+                    queryparents.append(fac)
+        queryfactor = self.multiply_parents(queryfactor,queryparents,factors)
+        for key in observed.keys():
+            queryfactor.__reduce__(key,observed[key])
+        labels = queryfactor.get_df().columns
+        for elim in elim_order:
+            if elim != query and elim in labels:
+                queryfactor = queryfactor.__eliminate__(elim)
+        return queryfactor.get_df()
+
+        
+        
+            
