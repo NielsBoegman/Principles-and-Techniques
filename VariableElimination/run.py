@@ -5,6 +5,7 @@ Entry point for the creation of the variable elimination algorithm in Python 3.
 Code to read in Bayesian Networks has been provided. We assume you have installed the pandas package.
 
 """
+import pandas as pd
 from read_bayesnet import BayesNet
 from variable_elim import VariableElimination
 
@@ -20,7 +21,7 @@ if __name__ == '__main__':
     print("Parents:")
     print(net.parents)
     print("Probabilities:")
-    print(net.probabilities)
+    print(pd.merge(net.probabilities['Alarm'], net.probabilities['JohnCalls'], on='Alarm'))
 
     # Make your variable elimination code in the seperate file: 'variable_elim'. 
     # You use this file as follows:
