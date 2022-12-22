@@ -7,6 +7,9 @@ class Factor:
             self.labels.append(label)
         self.probabilties = df.values
     
+    def __mul__(self, other):
+        return
+    
     def reduce_factor(self, variable, value):
         index = self.labels.index(variable)
         for i in range(len(self.probabilties)):
