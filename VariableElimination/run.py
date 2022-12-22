@@ -25,6 +25,13 @@ if __name__ == '__main__':
 
     # Make your variable elimination code in the seperate file: 'variable_elim'. 
     # You use this file as follows:
+    df = pd.merge(net.probabilities['Alarm'], net.probabilities['MaryCalls'], on='Alarm')
+
+    df['prob'] = df['prob_x'] * df['prob_y']
+    df.pop('prob_x')
+    df.pop('prob_y')
+    print(df)
+    
     ve = VariableElimination(net)
 
     # Set the node to be queried as follows:
