@@ -21,7 +21,8 @@ class VariableElimination():
 
         """
         self.network = network
-
+    #Multiply factor with its parents recursively to get the actual chances of everything of that set of inputs.
+    #Used as template to call the __mul__ function.
     def multiply_parents(self, child, parents, factors):
         for i in range(len(parents)):
             if not len(parents[i].get_parents()) == 0:
@@ -53,28 +54,34 @@ class VariableElimination():
                 for the query variable
 
         """
+        #First turn the dataframes into our own custom Factor class and store in a list
         factors = []
         queryfactor = None
         for key in self.network.probabilities.keys():
             factors.append(Factor(self.network.probabilities[key]))
+        #Retrieve the factor of the query variable
         for fac in factors:
             if fac.get_label() == query:
                 queryfactor = fac
                 break
-        
+        #Get the parents of the query variable to start the process of determining the probabilities
         queryparents = []
         for parent in queryfactor.get_parents():
             for fac in factors:
                 if fac.get_label() == parent:
                     queryparents.append(fac)
+        #Call the multiply_parents function to update the probabilities to the required values
         queryfactor = self.multiply_parents(queryfactor,queryparents,factors)
+        #Reduce to account for evidence
         for key in observed.keys():
             queryfactor.__reduce__(key,observed[key])
         labels = queryfactor.get_df().columns
+        #Eliminate the variables in the given order
         for elim in elim_order:
             if elim != query and elim in labels:
                 queryfactor = queryfactor.__eliminate__(elim)
         df = queryfactor.get_df()
+        #Normalize the resulting factor
         multiplyfactor = 1/(df['prob'][0] + df['prob'][1])
         df['prob'][0] = df['prob'][0] * multiplyfactor
         df['prob'][1] = df['prob'][1] * multiplyfactor
