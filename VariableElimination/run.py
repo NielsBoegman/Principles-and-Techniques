@@ -16,7 +16,7 @@ if __name__ == '__main__':
     
     # These are the variables read from the network that should be used for variable elimination
     # print("Nodes:")
-    print(net.nodes)
+    #print(net.nodes)
     # print("Values:")
     # print(net.values)
     # print("Parents:")
@@ -24,23 +24,8 @@ if __name__ == '__main__':
     # print("Probabilities:")
     # print(net.probabilities)
 
-    # print("Borgarlary\n", net.probabilities['Burglary'])
-    # print("Alarm\n", net.probabilities['Alarm'])
-
-    burglary = Factor(net.probabilities['Burglary'])
-    alarm = Factor(net.probabilities['Alarm'])
-    earthquake = Factor(net.probabilities['Earthquake'])
     # Make your variable elimination code in the seperate file: 'variable_elim'. 
     # You use this file as follows:
-
-    # print(burglary.get_label())
-    # print(alarm.get_parents())
-    # print(earthquake.get_parents())
-
-    alarm.__reduce__("Burglary", "True")
-    new = burglary.__mul__(alarm)
-    new_2 = new.__eliminate__("Earthquake")
-    # print(new_2.get_df())
     
     ve = VariableElimination(net)
 
