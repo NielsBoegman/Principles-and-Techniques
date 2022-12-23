@@ -74,7 +74,11 @@ class VariableElimination():
         for elim in elim_order:
             if elim != query and elim in labels:
                 queryfactor = queryfactor.__eliminate__(elim)
-        return queryfactor.get_df()
+        df = queryfactor.get_df()
+        multiplyfactor = 1/(df['prob'][0] + df['prob'][1])
+        df['prob'][0] = df['prob'][0] * multiplyfactor
+        df['prob'][1] = df['prob'][1] * multiplyfactor
+        return df
 
         
         
