@@ -13,13 +13,13 @@ class Factor:
         self.df = df
     
     def __mul__(self, other):
-        common = ""
+        common = []
         self_val_label = self.labels[-1]
         other_val_label = other.labels[-1]
         for i in range(len(self.labels)-1):
             for j in range(len(other.labels)-1):
                 if self.labels[i] == other.labels[j]:
-                    common = self.labels[i]
+                    common.append(self.labels[i])
         
         new_df = pd.merge(self.get_df(), other.get_df(), on=common)
         if self_val_label == other_val_label:
